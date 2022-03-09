@@ -160,3 +160,45 @@ class Mysql(DataBase):
                 print(err)
 
 
+# This method permit insert the client's payments in de DB
+
+    def insertDBPayment(self, data,type)->bool:
+        if(type == "cash"):
+            self.__mycursor.execute("SELECT MAX( id ) FROM `cash`")
+            id = self.__mycursor.fetchone()
+        
+            if(id[0]==None):
+                idcash = 0
+            else:
+                idcash = id[0]+1
+
+
+            try:
+                sql = f"INSERT INTO cash (`id`,`identification`,`value`) VALUES (%s, %s, %s)"            
+                val = (idcash, data["identification"], data["value"])
+                self.__mycursor.execute(sql, val)
+                self.__mydb.commit()
+                print("1 record inserted in table cash with ID:", idcash)
+                print("Dato insertado")
+            except Exception as err:
+                print(err)
+
+        if(type == "creditcard"):
+            self.__mycursor.execute("SELECT MAX( id ) FROM `creditcard`")
+            id = self.__mycursor.fetchone()
+        
+            if(id[0]==None):
+                idcreditcard = 0
+            else:
+                idcreditcard = id[0]+1
+
+
+            try:
+                sql = f"INSERT INTO creditcard (`id`,`identification`,`expirationdate`,`digits`,`quotas`) VALUES (%s, %s, %s, %s, %s)"            
+                val = (idcreditcard, data["identification"], data["expirationdate"], data["digits"], data["quotas"])
+                self.__mycursor.execute(sql, val)
+                self.__mydb.commit()
+                print("1 record inserted in table cash with ID:", idcreditcard)
+                print("Dato insertado")
+            except Exception as err:
+                print(err)

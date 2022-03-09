@@ -1,11 +1,11 @@
 class PaymentMethod:
 
     __type:str
-    __client:str
+    __clientIdentification:int
 
-    def __init__(self, client:str, type:str) -> None:
+    def __init__(self, clientIdentification:int, type:str) -> None:
         self.__type = type
-        self.__client = client
+        self.__clientIdentification = clientIdentification
 
     def create(self) -> None:
         print('The payment method  was created')
@@ -21,5 +21,5 @@ class PaymentMethod:
         print(f'''
         The Payment Method count with the next information:
         Type: {self.__type}
-        Client: {self.__client}
+        Client: {self.__clientIdentification}
         ''')

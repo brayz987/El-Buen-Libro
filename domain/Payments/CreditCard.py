@@ -7,8 +7,8 @@ class CreditCard(PaymentMethod):
     __transactionnumber:int
     __quotas:int
 
-    def __init__(self, client:str, expirationdate:str, digits:int, quotas:int) -> None:
-        PaymentMethod.__init__(self,client,type="Credit Card")
+    def __init__(self, identification:int, expirationdate:str, digits:int, quotas:int) -> None:
+        PaymentMethod.__init__(self,identification,type="Credit Card")
         self.__expirationdate = expirationdate
         self.__digits = digits
         self.__quotas = quotas

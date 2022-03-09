@@ -4,6 +4,9 @@ from database.Mysql import Mysql
 from domain.Items.Book import Book
 from domain.Items.Movie import Movie
 from domain.Items.Video import Video
+from domain.Payments.Cash import Cash
+from domain.Payments.CreditCard import CreditCard
+from domain.Payments.PaymentMethod import PaymentMethod
 from domain.Persons.Admin import Admin
 from domain.Persons.Person import Person
 from domain.Persons.Client import Client
@@ -76,6 +79,29 @@ def createItem(type):
     
     item.getData()
     myconeccion.insertDBitem(data,type)
+
+    return {
+        "title": "Dato insertado en la DB"
+    }
+
+
+@app.route("/payment/<type>", methods=["POST"])
+def createPayment(type):
+    data = json.loads(request.data)
+
+
+    if(type=="cash"):
+        payment:Cash= Cash(data["identification"], data["value"])
+    
+    payment.getData()
+    myconeccion.insertDBPayment(data,type)
+
+    if(type=="creditcard"):
+        payment:CreditCard= CreditCard(data["identification"], data["expirationdate"], data ["digits"], data ["quotas"])
+    
+    payment.getData()
+    myconeccion.insertDBPayment(data,type)
+
 
     return {
         "title": "Dato insertado en la DB"
